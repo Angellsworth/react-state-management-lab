@@ -2,6 +2,15 @@
   margin: 16px;
 }
 
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+
+
 ul {
   display: flex;
   flex-wrap: wrap;
