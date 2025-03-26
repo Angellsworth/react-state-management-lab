@@ -16,6 +16,7 @@ const App=()=> {
       price: 12,
       strength: 6,
       agility: 4,
+      votes: 0,
       img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/0c2d6b.png',
     },
     {
@@ -24,6 +25,7 @@ const App=()=> {
       price: 10,
       strength: 5,
       agility: 5,
+      votes: 0,
       img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/033a16.png',
     },
     {
@@ -32,6 +34,7 @@ const App=()=> {
       price: 18,
       strength: 7,
       agility: 8,
+      votes: 0,
       img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/262c36.png',
     },
     {
@@ -40,6 +43,7 @@ const App=()=> {
       price: 14,
       strength: 7,
       agility: 6,
+      votes: 0,
       img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/3c1e70.png',
     },
     {
@@ -48,6 +52,7 @@ const App=()=> {
       price: 20,
       strength: 6,
       agility: 8,
+      votes: 0,
       img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/4b2900.png',
     },
     {
@@ -56,6 +61,7 @@ const App=()=> {
       price: 15,
       strength: 5,
       agility: 7,
+      votes: 0,
       img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/5a1e02.png',
     },
     {
@@ -64,6 +70,7 @@ const App=()=> {
       price: 16,
       strength: 6,
       agility: 5,
+      votes: 0,
       img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/5e103e.png',
     },
     {
@@ -72,6 +79,7 @@ const App=()=> {
       price: 11,
       strength: 8,
       agility: 3,
+      votes: 0,
       img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/67060c.png',
     },
     {
@@ -80,6 +88,7 @@ const App=()=> {
       price: 17,
       strength: 5,
       agility: 9,
+      votes: 0,
       img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/ac3220.png',
     },
     {
@@ -88,11 +97,43 @@ const App=()=> {
       price: 22,
       strength: 7,
       agility: 6,
+      votes: 0,
       img: 'https://pages.git.generalassemb.ly/modular-curriculum-all-courses/react-state-management-lab/assets/e41f26.png',
     },
   ]
   )
-//4. Function: Add a fighter to your team
+  //just for fun upVotes for fighter and member
+  const handleUpvote = (id) => {
+    const updatedFighters = zombieFighters.map(fighter =>
+      fighter.id === id ? {...fighter, votes: fighter.votes + 1} : fighter
+      )
+      const updatedTeam = team.map(member => 
+        member.id === id ? {...member, votes: member.votes + 1} : member
+        )
+
+      setZombieFighters(updatedFighters)
+      setTeam(updatedTeam)
+  }
+  const handleDownvote = (id) => {
+    const updatedFighters = zombieFighters.map(fighter => {
+      if (fighter.id === id) {
+        const newVotes = fighter.votes > 0 ? fighter.votes - 1 : 0;
+        return { ...fighter, votes: newVotes };
+      }
+      return fighter;
+    });
+    const updatedTeam = team.map(member => {
+      if(member.id === id) {
+        const newVotes = member.votes > 0 ? member.votes -1 : 0;
+        return {...member, votes: newVotes}
+      }
+      return member
+    })
+    setZombieFighters(updatedFighters);
+    setTeam(updatedTeam)
+  };
+
+  //4. Function: Add a fighter to your team
   const handleAddFighter = (fighter) => {
     if (money < fighter.price) {
       console.log('Not enough money');
@@ -144,8 +185,14 @@ const App=()=> {
           <p>Strength: {fighter.strength}</p>
           <p>Agility: {fighter.agility}</p>
 
+          {/* just for fun votes */}
+          <p>Votes: {fighter.votes}</p>
+          <button onClick={() => handleUpvote(fighter.id)}>👍</button>
           {/* Add a fighter to your team */}
-          <button onClick={() => handleAddFighter(fighter)}>Add</button>
+          <button className="addButton"onClick={() => handleAddFighter(fighter)}>Add</button>
+          {/* just for fun votes */}
+          <button onClick={() => handleDownvote(fighter.id)}>👎</button>
+
         </li>
       ))}
     </ul>
@@ -163,9 +210,13 @@ const App=()=> {
             <p>Price: {member.price}</p>
           <p>Strength: {member.strength}</p>
           <p>Agility: {member.agility}</p>
-
+          
+          
           {/* Remove the fighter from your team */}
-          <button onClick={() => handleRemoveFighter(member)}>Remove</button>
+          <p>Votes: {member.votes}</p>
+          <button onClick={() => handleUpvote(member.id)}>👍</button>
+          <button className="removeButton" onClick={() => handleRemoveFighter(member)}>Remove</button>
+          <button onClick={() => handleDownvote(member.id)}>👎</button>
           </li>
         ))}
       </ul>

@@ -9,17 +9,30 @@ body {
 
 }
 
-
-
 ul {
   display: flex;
   flex-wrap: wrap;
 }
 
 li {
+  text-align: center;
   list-style: none;
   margin: 8px;
   padding: 8px;
   border: whitesmoke 3px solid;
   border-radius: 8px;
+}
+
+button {
+  border: 1px solid black;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.addButton {
+  background-color: rgb(91, 178, 91);
+}
+
+.removeButton {
+  background-color: rgb(254, 81, 81);
 }
