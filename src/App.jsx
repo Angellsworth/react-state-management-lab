@@ -172,7 +172,7 @@ const App=()=> {
   //8. Now we arrange and display
   return (
     <div >
-    <h1>Zombie Fighters</h1>
+    <h1>The Walking Dead Fighters</h1>
 
     {/* Show the money */}
     <p>Money: {money}</p>
